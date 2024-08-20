@@ -1,4 +1,4 @@
 python.exe -m pip install --upgrade pip
 
-pip install fastapi psycopg2-binary sqlalchemy asyncpg uvicorn python-jose[cryptography] pytz passlib python-multipart pydantic-settings pydantic[email] pandas scikit-learn joblib
+pip install fastapi psycopg2-binary sqlalchemy asyncpg uvicorn python-jose[cryptography] pytz passlib python-multipart pydantic-settings pydantic[email] pandas scikit-learn joblib gunicorn
 
