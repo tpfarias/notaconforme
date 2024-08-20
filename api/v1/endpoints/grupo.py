@@ -13,7 +13,7 @@ from schemas.grupo_schema import GrupoSchema
 router = APIRouter()
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=GrupoSchema)
-async def post_grupos(grupo: GrupoSchema, db: AsyncSession = Depends(get_session)):
+async def post_grupos(grupo: GrupoSchema, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
     novo_grupo: GrupoModel = GrupoModel(
         nome=grupo.nome,
     )

@@ -26,7 +26,7 @@ def get_logado(usuario_logado: UsuarioModel = Depends(get_current_user)):
 
 # POST / Signup
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchema)
-async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
+async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
     novo_usuario: UsuarioModel = UsuarioModel(
         nome=usuario.nome,
         email=usuario.email,
