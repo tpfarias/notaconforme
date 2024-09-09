@@ -9,10 +9,12 @@ from sqlalchemy.future import select
 from core.deps import get_session, get_current_user
 from schemas.predicao_schema import PredicaoSchema, PredicaoSchemaResponse
 
-vectorizer_path = "MLModels/vectorizer_PNL.pkl"
+#vectorizer_path = "MLModels/vectorizer_PNL.pkl"
+vectorizer_path = "MLModels/vectorizer_ficticio.pkl"
 vectorizer = joblib.load(vectorizer_path)
 
-modelo_path = "MLModels/model_ML.joblib"
+#modelo_path = "MLModels/model_ML.joblib"
+modelo_path = "MLModels/modelo_ficticio.joblib"
 modelo_treinado = joblib.load(modelo_path)
 
 router = APIRouter()
