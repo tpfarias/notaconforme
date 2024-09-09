@@ -10,4 +10,4 @@ class PredicaoSchema(BaseModel):
 
 class PredicaoSchemaResponse(BaseModel):
     id: int
-    servico_correto: bool
+    cnae: str
