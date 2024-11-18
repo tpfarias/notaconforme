@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from core.deps import get_session, get_current_user
-from schemas.predicao_schema import PredicaoSchema, PredicaoSchemaResponse
+from schemas.predicao_schema import PredicaoSchema
 
 #vectorizer_path = "MLModels/vectorizer_PNL.pkl"
 vectorizer_path = "MLModels/vectorizer_ficticio.pkl"
@@ -19,7 +19,7 @@ modelo_treinado = joblib.load(modelo_path)
 
 router = APIRouter()
 
-@router.post('/', status_code=status.HTTP_200_OK, response_model=List[PredicaoSchemaResponse])
+@router.post('/', status_code=status.HTTP_200_OK)
 async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
 
     response = []
@@ -27,13 +27,17 @@ async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioM
     for item in request:
         try:
             discriminacao_vetorizada = vectorizer.transform([item.discriminacao.lower()])
-            cnae = modelo_treinado.predict(discriminacao_vetorizada)
-            response.append(PredicaoSchemaResponse(id=item.id, cnae=str(cnae)))
+            cod_servico = modelo_treinado.predict(discriminacao_vetorizada)
+            response_data = {"servicos": str(cod_servico)}
+            response_data.update(item.model_dump(exclude={"discriminacao"}))
+
+            response.append(response_data)
+
+
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {str(e)}")
 
     return response
-
 
 
 

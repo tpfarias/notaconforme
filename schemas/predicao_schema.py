@@ -1,13 +1,11 @@
 from pydantic import BaseModel
+from typing import Dict, Any
 
 class PredicaoSchema(BaseModel):
-    id: int
     discriminacao: str
+    #campos_dinamicos: Dict[str, Any] = {}
 
-#    class Config:
-#        orm_mode = True
+    class Config:
+       extra = "allow"
 
 
-class PredicaoSchemaResponse(BaseModel):
-    id: int
-    cnae: str
