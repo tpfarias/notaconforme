@@ -1,4 +1,4 @@
 #Models ML
 
-MLModels/model_ML.joblib
-MLModels/vectorizer_PNL.pkl
+MLModels/modelo_multilabel_randomForest.joblib
+MLModels/vectorizer_multilabel_randomForest.pkl
