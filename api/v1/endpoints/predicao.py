@@ -1,21 +1,24 @@
 import joblib
-
 from typing import List
 from fastapi import APIRouter, status, Depends, HTTPException, Response
 from models.usuario_model import UsuarioModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
 from core.deps import get_session, get_current_user
 from schemas.predicao_schema import PredicaoSchema
+from api.v1.functions.pre_processamento import preprocessar_texto
 
-#vectorizer_path = "MLModels/vectorizer_multilabel_randomForest.pkl"
-vectorizer_path = "MLModels/vectorizer_multilabel_randomForest_simulado.pkl"
+#Modelo de Produção
+#modelo_path = "MLModels/modelo_preditivo.joblib"
+#vectorizer_path = "MLModels/vectorizer.pkl"
+
+#Modelo Simulado - GitHUB
+vectorizer_path = "MLModels/vectorizer_simulado.pkl"
+modelo_path = "MLModels/modelo_preditivo_simulado.joblib"
+
 vectorizer = joblib.load(vectorizer_path)
-
-#modelo_path = "MLModels/modelo_multilabel_randomForest.joblib"
-modelo_path = "MLModels/modelo_multilabel_randomForest_simulado.joblib"
 modelo_treinado = joblib.load(modelo_path)
+
 
 router = APIRouter()
 
@@ -30,26 +33,24 @@ async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioM
         '0417', '0418', '0419', '0420', '0421', '1'
     ]
 
-    for item in request:
-        try:
-            discriminacao_vetorizada = vectorizer.transform([item.discriminacao.lower()])
-            cod_servico = modelo_treinado.predict(discriminacao_vetorizada)
-            codigos_selecionados = [classes[i] for i in range(len(classes)) if cod_servico[0, i] == 1]
+    discriminacoes_processadas = [preprocessar_texto(item.discriminacao) for item in request]
+    discriminacoes_vetorizadas = vectorizer.transform(discriminacoes_processadas)
+    cod_servicos = modelo_treinado.predict(discriminacoes_vetorizadas)
 
+    for idx, item in enumerate(request):
+        try:
+            codigos_selecionados = [classes[i] for i in range(len(classes)) if cod_servicos[idx, i] == 1]
             response_data = {
-                "servicos": codigos_selecionados  # Lista de códigos selecionados
+                "servicos": codigos_selecionados
             }
 
             response_data.update(item.model_dump(exclude={"discriminacao"}))
             response.append(response_data)
 
-
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {str(e)}")
 
     return response
-
-
 
 
 
