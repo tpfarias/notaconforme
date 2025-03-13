@@ -32,7 +32,6 @@ async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(
         email=usuario.email,
         senha=gerar_hash_senha(usuario.senha),
         ativo=usuario.ativo,
-        grupo_id=usuario.grupo_id
     )
 
     async with db as session:

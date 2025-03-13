@@ -44,7 +44,7 @@ async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioM
                 "servicos": codigos_selecionados
             }
 
-            response_data.update(item.model_dump(exclude={"discriminacao"}))
+            response_data.update(item.model_dump(exclude = {"discriminacao"}))
             response.append(response_data)
 
         except Exception as e:

@@ -12,11 +12,5 @@ class UsuarioModel(settings.DBBaseModel):
     email = Column(String(300), index=True, nullable=False, unique=True)
     senha = Column(String(300), nullable=False)
     ativo = Column(Boolean, default=True)
-    grupo_id = Column(Integer, ForeignKey('grupos.id'))
 
-    grupo = relationship(
-        "GrupoModel",
-        back_populates='usuarios',
-        lazy='joined'
-    )
 
