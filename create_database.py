@@ -8,13 +8,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 async def create_default_user(session: AsyncSession):
     # Verificar se o usuário já existe
     async with session.begin():
-        result = await session.execute(select(UsuarioModel).filter_by(username="admin"))
+        result = await session.execute(select(UsuarioModel).filter_by(email="admin@admin.com"))
         user = result.scalar_one_or_none()
 
         # Se o usuário não existir, criar um novo
         if user is None:
             hashed_password = gerar_hash_senha("admin1234")  # Senha padrão
-            new_user = UsuarioModel(username="admin", password=hashed_password)
+            new_user = UsuarioModel(nome="Admin", email="admin@admin.com", senha=hashed_password)
             session.add(new_user)
             await session.commit()
             print("Usuário padrão 'admin' criado com sucesso.")
