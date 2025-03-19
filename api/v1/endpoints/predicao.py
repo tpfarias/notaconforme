@@ -9,12 +9,12 @@ from schemas.predicao_schema import PredicaoSchema
 from api.v1.functions.pre_processamento import preprocessar_texto
 
 #Modelo de Produção
-modelo_path = "MLModels/modelo_preditivo.joblib"
-vectorizer_path = "MLModels/vectorizer.pkl"
+#modelo_path = "MLModels/modelo_preditivo.joblib"
+#vectorizer_path = "MLModels/vectorizer.pkl"
 
 #Modelo Simulado - GitHUB
-#vectorizer_path = "MLModels/vectorizer_simulado.pkl"
-#modelo_path = "MLModels/modelo_preditivo_simulado.joblib"
+vectorizer_path = "MLModels/vectorizer_simulado.pkl"
+modelo_path = "MLModels/modelo_preditivo_simulado.joblib"
 
 vectorizer = joblib.load(vectorizer_path)
 modelo_treinado = joblib.load(modelo_path)
