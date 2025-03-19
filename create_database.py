@@ -1,8 +1,24 @@
 from core.config import settings
-from core.database import engine, SessionLocal
-from models.usuario_model import UsuarioModel  # Importe o modelo de usuário
+from core.database import engine, Session
+from models.usuario_model import UsuarioModel
 from core.security import gerar_hash_senha
-from passlib.context import CryptContext
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+
+async def create_default_user(session: AsyncSession):
+    # Verificar se o usuário já existe
+    async with session.begin():
+        result = await session.execute(select(UsuarioModel).filter_by(username="admin"))
+        user = result.scalar_one_or_none()
+
+        # Se o usuário não existir, criar um novo
+        if user is None:
+            hashed_password = gerar_hash_senha("admin1234")  # Senha padrão
+            new_user = UsuarioModel(username="admin", password=hashed_password)
+            session.add(new_user)
+            await session.commit()
+            print("Usuário padrão 'admin' criado com sucesso.")
 
 
 async def create_tables() -> None:
@@ -14,27 +30,10 @@ async def create_tables() -> None:
         await conn.run_sync(settings.DBBaseModel.metadata.create_all)
     print('Tabelas criadas com sucesso...')
 
-    # Criar usuário padrão
-    await create_default_user()
-
-
-async def create_default_user():
-    db = SessionLocal()
-    try:
-        # Verificar se o usuário já existe
-        if not db.query(UsuarioModel).filter_by(email="admin@email.com").first():
-            hashed_password = gerar_hash_senha("admin123")  # Senha segura
-            user = UsuarioModel(nome="Admin", email="admin@email.com", senha=hashed_password, ativo=True)
-            db.add(user)
-            db.commit()
-            print("Usuário padrão criado com sucesso.")
-        else:
-            print("Usuário padrão já existe.")
-    except Exception as e:
-        print(f"Erro ao criar usuário padrão: {e}")
-        db.rollback()
-    finally:
-        db.close()
+    # Criar o usuário padrão após as tabelas
+    async with engine.begin() as conn:
+        async_session = AsyncSession(bind=conn)
+        await create_default_user(async_session)
 
 
 if __name__ == '__main__':
