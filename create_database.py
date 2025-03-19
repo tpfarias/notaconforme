@@ -5,7 +5,6 @@ from core.security import gerar_hash_senha
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-"""
 async def create_default_user(session: AsyncSession):
     # Verificar se o usuário já existe
     async with session.begin():
@@ -20,7 +19,7 @@ async def create_default_user(session: AsyncSession):
             await session.commit()
             print("Usuário padrão 'admin' criado com sucesso.")
 
-"""
+
 async def create_tables() -> None:
     import models.__all_models
     print('Criando as tabelas no banco de dados')
@@ -30,12 +29,11 @@ async def create_tables() -> None:
         await conn.run_sync(settings.DBBaseModel.metadata.create_all)
     print('Tabelas criadas com sucesso...')
 
-""" 
+
     # Criar o usuário padrão após as tabelas
     async with engine.begin() as conn:
         async_session = AsyncSession(bind=conn)
         await create_default_user(async_session)
-"""
 
 
 if __name__ == '__main__':
