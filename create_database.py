@@ -30,10 +30,8 @@ async def create_tables() -> None:
     print('Tabelas criadas com sucesso...')
 
 
-    # Criar o usuário padrão após as tabelas
-    async with engine.begin() as conn:
-        async_session = AsyncSession(bind=conn)
-        await create_default_user(async_session)
+    async with AsyncSession(engine) as session:
+        await create_default_user(session)
 
 
 if __name__ == '__main__':
