@@ -162,7 +162,7 @@ sudo systemctl start notaconforme_api.service
 sudo systemctl status notaconforme_api.service
 ```
 
-8.4 Reiniciando o Serviço Após Alterações
+### 8.4 Reiniciando o Serviço Após Alterações
 Sempre que modificar o arquivo de serviço, rode os comandos abaixo para aplicar as mudanças:
 
 ```bash
