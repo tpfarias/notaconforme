@@ -2,3 +2,7 @@
 
 MLModels/modelo_preditivo.joblib
 MLModels/vectorizer.pkl
+MLModels/modelo_LSVM.pkl
+MLModels/modelo_RF.pkl
+MLModels/vectorizer_LSVM.pkl
+MLModels/vectorizer_RF.pkl

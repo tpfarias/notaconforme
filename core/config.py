@@ -5,11 +5,11 @@ from sqlalchemy.ext.declarative import declarative_base
 
 class Settings(BaseSettings):
     API_V1_URL: str = '/api/v1'
-    DB_URL: str = 'postgresql+asyncpg://user_notaconforme:nota789463@localhost:5432/notaconforme'
+    DB_URL: str = 'postgresql+asyncpg://user_notaconforme:nota789463@localhost:5432/notaconforme' #Inclua aqui a conexão do banco de dados
     V_TIME_ZONE: ClassVar = 'America/Sao_Paulo'
     DBBaseModel: ClassVar = declarative_base()
 
-    JWT_SECRET: str = 'kcOMPV3RhB-9nMTQbbRvNtyewBRAsnPJbZ3JE0-Va7g'
+    JWT_SECRET: str = 'kcOMPV3RhB-9nMTQbbRvNtyewBRAsnPJbZ3JE0-Va7g' #Inclua aqui a chave JWT
     ALGORITHM: str = 'HS256'
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 43200
 

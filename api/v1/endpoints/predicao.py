@@ -8,11 +8,11 @@ from core.deps import get_session, get_current_user
 from schemas.predicao_schema import PredicaoSchema
 from api.v1.functions.pre_processamento import preprocessar_texto
 
-#Modelo de Produção
-#modelo_path = "MLModels/modelo_preditivo.joblib"
-#vectorizer_path = "MLModels/vectorizer.pkl"
+# Modelo de Produção
+# modelo_path = "MLModels/modelo_RF.pkl"
+# vectorizer_path = "MLModels/vectorizer_RF.pkl"
 
-#Modelo Simulado - GitHUB
+# Modelo Simulado - GitHUB
 vectorizer_path = "MLModels/vectorizer_simulado.pkl"
 modelo_path = "MLModels/modelo_preditivo_simulado.joblib"
 
@@ -21,6 +21,7 @@ modelo_treinado = joblib.load(modelo_path)
 
 
 router = APIRouter()
+
 
 @router.post('/', status_code=status.HTTP_200_OK)
 async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
@@ -33,24 +34,25 @@ async def post_predicoes(request: List[PredicaoSchema], usuario_logado: UsuarioM
         '0417', '0418', '0419', '0420', '0421', '1'
     ]
 
-    discriminacoes_processadas = [preprocessar_texto(item.discriminacao) for item in request]
-    discriminacoes_vetorizadas = vectorizer.transform(discriminacoes_processadas)
+    discriminacoes_processadas = [preprocessar_texto(
+        item.discriminacao) for item in request]
+    discriminacoes_vetorizadas = vectorizer.transform(
+        discriminacoes_processadas)
     cod_servicos = modelo_treinado.predict(discriminacoes_vetorizadas)
 
     for idx, item in enumerate(request):
         try:
-            codigos_selecionados = [classes[i] for i in range(len(classes)) if cod_servicos[idx, i] == 1]
+            codigos_selecionados = [classes[i] for i in range(
+                len(classes)) if cod_servicos[idx, i] == 1]
             response_data = {
                 "servicos": codigos_selecionados
             }
 
-            response_data.update(item.model_dump(exclude = {"discriminacao"}))
+            response_data.update(item.model_dump(exclude={"discriminacao"}))
             response.append(response_data)
 
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {str(e)}")
+            raise HTTPException(
+                status_code=500, detail=f"Erro ao processar a requisição: {str(e)}")
 
     return response
-
-
-
