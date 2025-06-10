@@ -170,7 +170,16 @@ sudo systemctl daemon-reload
 sudo systemctl restart notaconforme_api.service
 ```
 
-# Pronto!
+## Pronto!
 A API Nota Conforme estará rodando e disponível na porta 8000 do servidor.
 
-Se precisar de ajuda ou encontrar algum problema, abra uma issue ou entre em contato!
+## Informações de Contato
+
+Caso tenha dúvidas, sugestões ou precise de suporte relacionado à API Nota Conforme, entre em contato:
+
+- **Autor:** Tarcísio Farias  
+- **Email:** [tarcisioparaiso@gmail.com](mailto:tarcisioparaiso@gmail.com)  
+- **GitHub:** [@tpfarias](https://github.com/tpfarias)
+
+Fique à vontade para abrir uma **issue** neste repositório para relatar bugs ou sugerir melhorias.
+
