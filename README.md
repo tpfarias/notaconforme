@@ -19,8 +19,9 @@ sudo apt install build-essential git unzip zip tree \
 python3-dev python3-pip python3-venv \
 postgresql postgresql-contrib -y
 
+---
 
-Preparação dos Diretórios
+## Preparação dos Diretórios
 
 ```bash
 mkdir /apps
