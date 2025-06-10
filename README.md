@@ -15,20 +15,6 @@ Certifique-se de estar utilizando uma distribuição Linux com suporte a `apt` (
 ```bash
 sudo apt update && sudo apt upgrade -y
 
-sudo apt install build-essential git unzip zip tree \
-python3-dev python3-pip python3-venv \
-postgresql postgresql-contrib -y
+apt install build-essential git unzip zip tree python3-dev python3-pip python3-venv postgresql postgresql-contrib -y
 
----
 
-## Preparação dos Diretórios
-
-```bash
-mkdir /apps
-chmod 777 /apps
-
-mkdir /apps/logs
-mkdir /apps/logs/notaconforme_api
-touch /apps/logs/notaconforme_api/app_log
-
-cd /apps
