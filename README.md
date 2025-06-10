@@ -16,5 +16,5 @@ Certifique-se de estar utilizando uma distribuição Linux com suporte a `apt` (
 sudo apt update && sudo apt upgrade -y
 
 apt install build-essential git unzip zip tree python3-dev python3-pip python3-venv postgresql postgresql-contrib -y
-
+```
 
