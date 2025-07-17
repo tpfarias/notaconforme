@@ -173,6 +173,11 @@ sudo systemctl restart notaconforme_api.service
 ## Pronto!
 A API Nota Conforme estará rodando e disponível na porta 8000 do servidor.
 
+
+## Exemplo de Request e Response para o principal endpoint do Nota Conforme: Predicoes
+<img width="1217" height="694" alt="Captura de tela 2025-07-17 145925" src="https://github.com/user-attachments/assets/5ff61601-d0ff-4ba6-b340-8a6c236767d3" />
+
+
 ## Informações de Contato
 
 Caso tenha dúvidas, sugestões ou precise de suporte relacionado à API Nota Conforme, entre em contato:
