@@ -1,6 +1,10 @@
 # API Nota Conforme
 Este repositório contém o código-fonte da API **Nota Conforme**, além de instruções detalhadas para sua instalação, configuração e execução como serviço no Linux (via `systemd`).
 
+O **Nota Conforme** é uma solução baseada em Inteligência Artificial, que utiliza técnicas de Processamento de Linguagem Natural (PLN) e Aprendizado de Máquina para identificar automaticamente os serviços descritos nas Notas Fiscais de Serviços Eletrônicas (NFS-e).
+
+O objetivo do sistema é apoiar os auditores fiscais nos processos de fiscalização tributária, auxiliando na detecção de inconsistências entre os serviços declarados e a alíquota aplicada. Com isso, o Nota Conforme contribui para o aumento da conformidade fiscal e a mitigação de prejuízos ao erário.
+
 ---
 
 ## Requisitos do Sistema
